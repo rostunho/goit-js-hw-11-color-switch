@@ -2,9 +2,9 @@ import refs from './refs.js';
 import colors from './colors.js';
 import randomIntegerFromInterval from './randomiser.js';
 
-// console.log(colors);
-
 let intervalId = null;
+let currentColor;
+let newColor;
 
 function runColorSwitcher() {
   intervalId = setInterval(changeColor, 1000);
@@ -17,10 +17,14 @@ function stopColorSwitcher() {
 }
 
 function changeColor() {
-  refs.body.style.backgroundColor =
-    colors[randomIntegerFromInterval(0, colors.length)];
+  do {
+    newColor = colors[randomIntegerFromInterval(0, colors.length - 1)];
+  } while (newColor === currentColor);
 
-  console.log('new bg-color');
+  refs.body.style.backgroundColor = newColor;
+  currentColor = newColor;
+
+  console.log(`New background color is ${newColor}`);
 }
 
 function blockButton(button) {
